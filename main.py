@@ -4,9 +4,9 @@ import requests
 
 requests.packages.urllib3.disable_warnings()
 
-path = "/home/sonex/Development/python-code/to-do-Manager/tasks.csv"
+path = "/tasks.csv"
 
-url = "https://192.168.178.148:25565/static/tasks.csv"
+url = "SERVER/tasks.csv"
 ret = requests.get(url,verify=False)
 with open(path,"wb") as f:
     f.write(ret.content)
@@ -92,5 +92,5 @@ elif sys.argv[1] == "done":
 
 write_tasks(task_list)
 text = open(path,"rb").read()
-url = "http://192.168.178.148:1337/gettasks"
+url = "SERVER/gettasks"
 requests.post(url,data={"text":text},verify=False)
