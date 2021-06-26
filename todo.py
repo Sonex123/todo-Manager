@@ -3,7 +3,7 @@ import requests
 from task import Task
 
 app = Flask(__name__)
-path = "/home/sonex/web/static/tasks.csv"
+path = "/tasks.csv"
 
 def write_tasks(tl):
     with open(path,'w') as f:
