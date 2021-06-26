@@ -140,10 +140,10 @@ def done(id):
 
 @app.route("/gettasks", methods=["POST"])
 def gettasks():
-    print(request.form["text"])
-    with open(f"{path}{request.form['name']}.csv","w") as f:
-        f.write(request.form["text"])
-    return request.form["text"]
+    if request.form["name"]!="":
+        with open(f"{path}{request.form['name']}.csv","w") as f:
+            f.write(request.form["text"])
+    return ""
 
 
 if __name__ == "__main__":

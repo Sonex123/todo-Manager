@@ -8,12 +8,16 @@ requests.packages.urllib3.disable_warnings()
 
 path = "/home/sonex/Development/python-code/to-do-Manager/tasks.csv"
 
-url = f"https://192.168.178.148:25565/static/{USERNAME}.csv"
-ret = requests.get(url,verify=False)
-with open(path,"wb") as f:
-    f.write(ret.content)
+if USERNAME != "LOCAL": 
+    url = f"https://192.168.178.148:25565/static/{USERNAME}.csv"
 
-print(f"Logined as {USERNAME}")
+    ret = requests.get(url,verify=False)
+    with open(path,"wb") as f:
+        f.write(ret.content)
+
+    print(f"Logined as {USERNAME}")
+else:
+    print("Local User")
 
 
 def read_tasks(string):
@@ -95,6 +99,7 @@ elif sys.argv[1] == "done":
     
 
 write_tasks(task_list)
-text = open(path,"rb").read()
-url = "http://192.168.178.148:1337/gettasks"
-requests.post(url,data={"name":USERNAME, "text":text},verify=False)
+if USERNAME != "LOCAL":
+    text = open(path,"rb").read()
+    url = "http://192.168.178.148:1337/gettasks"
+    requests.post(url,data={"name":USERNAME, "text":text},verify=False)
