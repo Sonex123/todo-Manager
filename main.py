@@ -2,14 +2,18 @@ import sys
 from task import Task
 import requests
 
+USERNAME = "Sonex123"
+
 requests.packages.urllib3.disable_warnings()
 
-path = "/tasks.csv"
+path = "/home/sonex/Development/python-code/to-do-Manager/tasks.csv"
 
-url = "SERVER/tasks.csv"
+url = f"https://192.168.178.148:25565/static/{USERNAME}.csv"
 ret = requests.get(url,verify=False)
 with open(path,"wb") as f:
     f.write(ret.content)
+
+print(f"Logined as {USERNAME}")
 
 
 def read_tasks(string):
@@ -92,5 +96,5 @@ elif sys.argv[1] == "done":
 
 write_tasks(task_list)
 text = open(path,"rb").read()
-url = "SERVER/gettasks"
-requests.post(url,data={"text":text},verify=False)
+url = "http://192.168.178.148:1337/gettasks"
+requests.post(url,data={"name":USERNAME, "text":text},verify=False)

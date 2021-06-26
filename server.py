@@ -3,10 +3,10 @@ import requests
 from task import Task
 
 app = Flask(__name__)
-path = "/tasks.csv"
+path = "/home/sonex/web/static/"
 
 def write_tasks(tl):
-    with open(path,'w') as f:
+    with open(f"{path}tasks.csv",'w') as f:
         for i in tl:
             f.write(';'.join([str(i.index), str(i.name), str(i.urgency), str(i.group), str(i.due)])+'\n')
             
@@ -22,7 +22,7 @@ def read_tasks(string):
 
 @app.route("/")
 def main():
-    l = open(path).read().strip().split("\n")
+    l = open(f"{path}tasks.csv").read().strip().split("\n")
     if len(l)!=0 and len(l[0])!=0:
         task_list = [read_tasks(i) for i in l]
     else:
@@ -90,7 +90,7 @@ def add():
     </form>
 </body>"""
     else:
-        l = open(path).read().strip().split("\n")
+        l = open(f"{path}tasks.csv").read().strip().split("\n")
         if len(l)!=0 and len(l[0])!=0:
             task_list = [read_tasks(i) for i in l]
         else:
@@ -125,7 +125,7 @@ def add():
 
 @app.route("/done/<id>", methods=["GET"])
 def done(id):
-    l = open(path).read().strip().split("\n")
+    l = open(f"{path}tasks.csv").read().strip().split("\n")
     if len(l)!=0 and len(l[0])!=0:
         task_list = [read_tasks(i) for i in l]
     else:
@@ -141,7 +141,7 @@ def done(id):
 @app.route("/gettasks", methods=["POST"])
 def gettasks():
     print(request.form["text"])
-    with open(path,"w") as f:
+    with open(f"{path}{request.form['name']}.csv","w") as f:
         f.write(request.form["text"])
     return request.form["text"]
 
